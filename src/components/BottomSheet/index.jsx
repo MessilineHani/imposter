@@ -1,0 +1,10 @@
+import BottomSheet from "./BottomSheet";
+import Players from "./Players";
+import Imposters from "./Imposters";
+import TimeLimit from "./TimeLimit";
+import Categories from "./Categories";
+BottomSheet.Players = Players;
+BottomSheet.Imposters = Imposters;
+BottomSheet.TimeLimit = TimeLimit;
+BottomSheet.Categories = Categories;
+export default BottomSheet;

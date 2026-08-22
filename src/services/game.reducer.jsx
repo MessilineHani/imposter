@@ -1,0 +1,50 @@
+export default function reducer(state, action) {
+  switch (action.type) {
+    case "ADD_PLAYER":
+      if (state.players.length >= 15) return state;
+      return {
+        ...state,
+        players: [...state.players, action.payload],
+      };
+    case "REMOVE_PLAYER": {
+      const newPlayers = state.players.filter(
+        (player, index) => index !== action.payload,
+      );
+      let newImposterCount = state.imposterCount;
+      if (newPlayers.length <= 10 && newPlayers.length > 5  && state.imposterCount  > 2) 
+        newImposterCount = 2
+      if (newPlayers.length <= 5 && state.imposterCount > 1) 
+        newImposterCount = 1
+      return {
+        ...state,
+        imposterCount: newImposterCount,
+        players: newPlayers,
+      };
+    }
+    case "INC_IMPOSTER":
+      if (state.imposterCount + 1 > 3) return state;
+      if (state.players.length <= 5) return state;
+      if (state.players.length <= 10 && state.imposterCount + 1 > 2)
+        return state;
+
+      return {
+        ...state,
+        imposterCount: state.imposterCount + 1,
+      };
+    case "DEC_IMPOSTER":
+      if (state.imposterCount - 1 <= 0) return state;
+      if (state.imposterCount - 1 >= state.players.length - 2) return state;
+      return {
+        ...state,
+        imposterCount: state.imposterCount - 1,
+      };
+    case "SET_TIME_LIMIT":
+      return {
+        ...state,
+        timeLimit: action.payload,
+      };
+
+    default:
+      return state;
+  }
+}

@@ -1,0 +1,113 @@
+[
+  {
+    "word": "Beach",
+    "hint": "A place you visit",
+    "category": "Everyday Places"
+  },
+  {
+    "word": "Airport",
+    "hint": "A place you visit",
+    "category": "Everyday Places"
+  },
+  {
+    "word": "Hospital",
+    "hint": "A place you visit",
+    "category": "Everyday Places"
+  },
+  {
+    "word": "Library",
+    "hint": "A place you visit",
+    "category": "Everyday Places"
+  },
+  { "word": "Gym", "hint": "A place you visit", "category": "Everyday Places" },
+  {
+    "word": "Wedding",
+    "hint": "A place you visit",
+    "category": "Everyday Places"
+  },
+  {
+    "word": "Souk",
+    "hint": "A place you visit",
+    "category": "Everyday Places"
+  },
+  {
+    "word": "Hammam",
+    "hint": "A place you visit",
+    "category": "Everyday Places"
+  },
+
+  { "word": "Couscous", "hint": "Something you eat", "category": "Food" },
+  { "word": "Pizza", "hint": "Something you eat", "category": "Food" },
+  { "word": "Tacos", "hint": "Something you eat", "category": "Food" },
+  { "word": "Sushi", "hint": "Something you eat", "category": "Food" },
+  { "word": "Shawarma", "hint": "Something you eat", "category": "Food" },
+  { "word": "Chorba", "hint": "Something you eat", "category": "Food" },
+  { "word": "Burger", "hint": "Something you eat", "category": "Food" },
+  { "word": "Makroudh", "hint": "Something you eat", "category": "Food" },
+
+  {
+    "word": "Titanic",
+    "hint": "A movie or show",
+    "category": "Movies & Shows"
+  },
+  {
+    "word": "Friends",
+    "hint": "A movie or show",
+    "category": "Movies & Shows"
+  },
+  {
+    "word": "Breaking Bad",
+    "hint": "A movie or show",
+    "category": "Movies & Shows"
+  },
+  {
+    "word": "Inception",
+    "hint": "A movie or show",
+    "category": "Movies & Shows"
+  },
+  {
+    "word": "Interstellar",
+    "hint": "A movie or show",
+    "category": "Movies & Shows"
+  },
+  { "word": "Dark", "hint": "A movie or show", "category": "Movies & Shows" },
+
+  { "word": "Football", "hint": "A sport or game", "category": "Sports" },
+  { "word": "Basketball", "hint": "A sport or game", "category": "Sports" },
+  { "word": "Chess", "hint": "A sport or game", "category": "Sports" },
+  { "word": "Tennis", "hint": "A sport or game", "category": "Sports" },
+  { "word": "Swimming", "hint": "A sport or game", "category": "Sports" },
+  { "word": "Boxing", "hint": "A sport or game", "category": "Sports" },
+
+  { "word": "Lion", "hint": "An animal", "category": "Animals" },
+  { "word": "Elephant", "hint": "An animal", "category": "Animals" },
+  { "word": "Dolphin", "hint": "An animal", "category": "Animals" },
+  { "word": "Eagle", "hint": "An animal", "category": "Animals" },
+  { "word": "Camel", "hint": "An animal", "category": "Animals" },
+
+  {
+    "word": "That road trip",
+    "hint": "Something we did together",
+    "category": "Our Squad"
+  },
+  {
+    "word": "The group chat",
+    "hint": "Something about us",
+    "category": "Our Squad"
+  },
+  {
+    "word": "Finals week",
+    "hint": "Something we went through",
+    "category": "Our Squad"
+  },
+  {
+    "word": "The 3am mission",
+    "hint": "Something we did together",
+    "category": "Our Squad"
+  },
+  {
+    "word": "Group project chaos",
+    "hint": "Something we went through",
+    "category": "Our Squad"
+  }
+]
