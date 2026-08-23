@@ -11,10 +11,14 @@ export default function reducer(state, action) {
         (player, index) => index !== action.payload,
       );
       let newImposterCount = state.imposterCount;
-      if (newPlayers.length <= 10 && newPlayers.length > 5  && state.imposterCount  > 2) 
-        newImposterCount = 2
-      if (newPlayers.length <= 5 && state.imposterCount > 1) 
-        newImposterCount = 1
+      if (
+        newPlayers.length <= 10 &&
+        newPlayers.length > 5 &&
+        state.imposterCount > 2
+      )
+        newImposterCount = 2;
+      if (newPlayers.length <= 5 && state.imposterCount > 1)
+        newImposterCount = 1;
       return {
         ...state,
         imposterCount: newImposterCount,
@@ -43,6 +47,20 @@ export default function reducer(state, action) {
         ...state,
         timeLimit: action.payload,
       };
+    case "SELECT_CATEGORY": {
+      let newSelectedCategories = state.selectedCategories;
+      if (action.payload === "all") newSelectedCategories = ["all"];
+      if (state.selectedCategories.includes(action.payload))
+        newSelectedCategories = newSelectedCategories.filter(
+          (c) => c !== action.payload,
+        );
+      else newSelectedCategories = [...newSelectedCategories, action.payload];
+      if (newSelectedCategories.length === 0) newSelectedCategories = ["all"];
+      return {
+        ...state,
+        selectedCategories: newSelectedCategories,
+      };
+    }
 
     default:
       return state;

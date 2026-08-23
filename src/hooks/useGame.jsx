@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { GameContext } from "../context/game.context.jsx";
-
+import words from "../assets/words.json";
 export default function useGame() {
   const { game, dispatch } = useContext(GameContext);
   const addPlayer = (e) => {
@@ -29,6 +29,13 @@ export default function useGame() {
           : null;
     if (actionType) dispatch({ type: actionType });
   };
+  const selectCategory = (category) => {
+    const categories = [
+      ...new Set(words.map((w) => w.category.toLocaleLowerCase())),
+    ];
+    if (!categories.includes(category) && category !== "all") return null;
+    dispatch({ type: "SELECT_CATEGORY", payload: category });
+  };
   return {
     game,
     dispatch,
@@ -36,5 +43,6 @@ export default function useGame() {
     removePlayer,
     setTimeLimit,
     mutateImposterCount,
+    selectCategory,
   };
 }
