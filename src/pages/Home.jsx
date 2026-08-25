@@ -1,6 +1,9 @@
 import BottomSheet from "../components/BottomSheet/index.jsx";
 import useBottomSheet from "../hooks/useBottomSheet.jsx";
+import useGame from "../hooks/useGame.jsx";
 export default function Home() {
+  const { startGame, game } = useGame();
+  console.log(game);
   const { bottomSheet, ToggleBottomSheet } = useBottomSheet();
   const bottomSheetElements = [
     "Players",
@@ -29,6 +32,12 @@ export default function Home() {
       </h1>
       {bottomSheetButtonsDOM}
       <BottomSheet>{bottomSheet.isOpen && bottomSheet.element}</BottomSheet>
+      <button
+        onClick={startGame}
+        className="text-l font-normal text-center text-white p-3 m-1 bg-black rounded-xl cursor-pointer"
+      >
+        Start game
+      </button>
     </>
   );
 }

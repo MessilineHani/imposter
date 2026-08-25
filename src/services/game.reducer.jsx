@@ -1,11 +1,14 @@
+
 export default function reducer(state, action) {
   switch (action.type) {
-    case "ADD_PLAYER":
+    case "ADD_PLAYER": {
       if (state.players.length >= 15) return state;
+      const newPlayers = [...state.players, action.payload]
       return {
         ...state,
-        players: [...state.players, action.payload],
+        players: newPlayers,
       };
+    }
     case "REMOVE_PLAYER": {
       const newPlayers = state.players.filter(
         (player, index) => index !== action.payload,
@@ -49,19 +52,36 @@ export default function reducer(state, action) {
       };
     case "SELECT_CATEGORY": {
       let newSelectedCategories = state.selectedCategories;
-      if (action.payload === "all") newSelectedCategories = ["all"];
+      if (action.payload === "all")
+        return { ...state, selectedCategories: ["all"] };
+      /// Removes the category if clicked twise
       if (state.selectedCategories.includes(action.payload))
         newSelectedCategories = newSelectedCategories.filter(
           (c) => c !== action.payload,
         );
-      else newSelectedCategories = [...newSelectedCategories, action.payload];
+      ///
+      /// Add the selected Category
+      else
+        newSelectedCategories = [
+          ...newSelectedCategories.filter((c) => c !== "all"),
+          action.payload,
+        ];
+      ////
       if (newSelectedCategories.length === 0) newSelectedCategories = ["all"];
       return {
         ...state,
         selectedCategories: newSelectedCategories,
       };
     }
-
+    case "START_GAME": {
+      return {
+        ...state,
+        phase: "passing",
+        players: action.payload.players,
+        currentWord: action.payload.word,
+        currentPlayerIndex: 0,
+      };
+    }
     default:
       return state;
   }

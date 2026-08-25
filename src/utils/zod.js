@@ -1,4 +1,4 @@
-import z from "zod"
+import z from "zod";
 
 // ---------------------------------------------------------------
 // 1. Setup input schema
@@ -14,22 +14,23 @@ const setupInputSchema = z
     players: z
       .array(
         z.object({
-          name: z.string().min(1, 'Player name cannot be empty'),
-        })
+          name: z.string().min(1, "Player name cannot be empty"),
+        }),
       )
-      .min(3, 'Need at least 3 players')
-      .max(15, 'Too many players'),
+      .min(3, "Need at least 3 players")
+      .max(15, "Too many players"),
 
-    imposterCount: z.number().min(1).max(5),
+    imposterCount: z.number().min(1).max(3),
     selectedCategories: z
-      .array(z.string())
-      .min(1, 'Select at least one category'),
+      .array(z.string().min(3))
+      .min(1, "Select at least one category"),
 
-    timeLimit: z.number().min(0).max(1800), // Seconds; 0 => no limit 
+    timeLimit: z.number().min(0).max(1800), // Seconds; 0 => no limit
   })
   .refine((data) => data.imposterCount <= data.players.length - 2, {
-    message: 'Too many imposters for this player count — need at least 2 crew members',
-    path: ['imposterCount'],
+    message:
+      "Too many imposters for this player count — need at least 2 crew members",
+    path: ["imposterCount"],
   });
 
 // ---------------------------------------------------------------
@@ -46,14 +47,14 @@ const roundStateSchema = z
       .array(
         z.object({
           name: z.string().min(1),
-          role: z.enum(['imposter', 'crew']), 
-        })
+          role: z.enum(["imposter", "crew"]),
+        }),
       )
       .min(3),
 
     imposterCount: z.number().min(1).max(5),
 
-    phase: z.enum(['setup', 'passing', 'discussion', 'results']),
+    phase: z.enum(["setup", "passing", "discussion", "results"]),
 
     currentWord: z.object({
       word: z.string().min(1),
@@ -67,16 +68,16 @@ const roundStateSchema = z
   })
   .refine(
     (data) =>
-      data.players.filter((p) => p.role === 'imposter').length === data.imposterCount,
+      data.players.filter((p) => p.role === "imposter").length ===
+      data.imposterCount,
     {
-      message: 'Number of assigned imposters does not match imposterCount',
-      path: ['players'],
-    }
+      message: "Number of assigned imposters does not match imposterCount",
+      path: ["players"],
+    },
   )
   .refine((data) => data.currentPlayerIndex < data.players.length, {
-    message: 'currentPlayerIndex out of bounds',
-    path: ['currentPlayerIndex'],
-  });  
+    message: "currentPlayerIndex out of bounds",
+    path: ["currentPlayerIndex"],
+  });
 
-
-export { setupInputSchema, roundStateSchema }
+export { setupInputSchema, roundStateSchema };
