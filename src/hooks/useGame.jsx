@@ -15,6 +15,17 @@ export default function useGame() {
   const removePlayer = (index) => {
     dispatch({ type: "REMOVE_PLAYER", payload: index });
   };
+  const editPlayer = (index, name) => {
+    const normalizedName =
+      typeof name === "string"
+        ? name.trim().replace(/\s+/g, " ").normalize("NFC")
+        : "";
+    if (!Number.isInteger(index) || !normalizedName) return;
+    dispatch({
+      type: "EDIT_PLAYER",
+      payload: { index, name: normalizedName },
+    });
+  };
   const setTimeLimit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -76,14 +87,32 @@ export default function useGame() {
       payload: { word: allowedWords[wordIndex], players: newPlayers },
     });
   };
+  const restart = () => {
+    if (game.phase === "reveal") startGame();
+  };
+  const exit = () => {
+    dispatch({ type: "EXIT_GAME" });
+  };
+  const passPlayer = () => {
+    dispatch({ type: "PASS_PLAYER" });
+  };
+
+  const reveal = () => {
+    dispatch({ type: "REVEAL" });
+  };
   return {
     game,
     dispatch,
     addPlayer,
     removePlayer,
+    editPlayer,
     setTimeLimit,
     mutateImposterCount,
     selectCategory,
     startGame,
+    restart,
+    exit,
+    passPlayer,
+    reveal,
   };
 }
