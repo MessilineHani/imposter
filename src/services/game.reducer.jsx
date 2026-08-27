@@ -1,12 +1,32 @@
+const normalizeName = (value) =>
+  typeof value === "string"
+    ? value.trim().replace(/\s+/g, " ").normalize("NFC")
+    : "";
+
+const normalizeCategory = (value) =>
+  typeof value === "string"
+    ? value.trim().replace(/\s+/g, " ").normalize("NFC").toLowerCase()
+    : "";
+
+const isValidCategory = (value) =>
+  value === "all" || (value.length >= 3 && value.length <= 40);
+
+const isValidWord = (word) =>
+  word !== null &&
+  typeof word === "object" &&
+  typeof word.word === "string" &&
+  word.word.trim().length > 0 &&
+  typeof word.hint === "string" &&
+  word.hint.trim().length > 0 &&
+  typeof word.category === "string" &&
+  isValidCategory(normalizeCategory(word.category));
+
 export default function reducer(state, action) {
   switch (action.type) {
     case "ADD_PLAYER": {
       if (state.phase !== "setup") return state;
       if (state.players.length >= 15) return state;
-      const name =
-        typeof action.payload?.name === "string"
-          ? action.payload.name.trim()
-          : "";
+      const name = normalizeName(action.payload?.name);
       if (!name) return state;
       return {
         ...state,
@@ -88,22 +108,22 @@ export default function reducer(state, action) {
       };
     case "SELECT_CATEGORY": {
       if (state.phase !== "setup") return state;
+      const category = normalizeCategory(action.payload);
+      if (!isValidCategory(category)) return state;
       let newSelectedCategories = state.selectedCategories;
-      if (action.payload === "all")
-        return { ...state, selectedCategories: ["all"] };
-      /// Removes the category if clicked twise
-      if (state.selectedCategories.includes(action.payload))
+      if (category === "all") return { ...state, selectedCategories: ["all"] };
+
+      // Keep category membership normalized while preserving toggle behavior.
+      if (state.selectedCategories.includes(category))
         newSelectedCategories = newSelectedCategories.filter(
-          (c) => c !== action.payload,
+          (c) => c !== category,
         );
-      ///
-      /// Add the selected Category
       else
         newSelectedCategories = [
           ...newSelectedCategories.filter((c) => c !== "all"),
-          action.payload,
+          category,
         ];
-      ////
+
       if (newSelectedCategories.length === 0) newSelectedCategories = ["all"];
       return {
         ...state,
@@ -114,20 +134,34 @@ export default function reducer(state, action) {
       const { players, word } = action.payload ?? {};
       if (!Array.isArray(players) || players.length < 3 || players.length > 15)
         return state;
+      if (state.phase !== "setup" && state.phase !== "reveal") return state;
+      if (!isValidWord(word)) return state;
+
+      const normalizedPlayers = players.map((player) => ({
+        ...player,
+        name: normalizeName(player?.name),
+      }));
       if (
-        !word ||
-        typeof word !== "object" ||
-        !word.word ||
-        !word.hint ||
-        !word.category
+        normalizedPlayers.some(
+          (player) =>
+            !player.name || !["imposter", "crew"].includes(player.role),
+        ) ||
+        normalizedPlayers.filter((player) => player.role === "imposter")
+          .length !== state.imposterCount ||
+        normalizedPlayers.filter((player) => player.role === "crew").length < 2
       )
         return state;
-      if (state.phase !== "setup" && state.phase !== "reveal") return state;
+
       return {
         ...state,
         phase: "passing",
-        players: players,
-        currentWord: word,
+        players: normalizedPlayers,
+        currentWord: {
+          ...word,
+          word: word.word.trim(),
+          hint: word.hint.trim(),
+          category: normalizeCategory(word.category),
+        },
         currentPlayerIndex: 0,
       };
     }

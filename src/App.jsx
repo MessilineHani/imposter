@@ -7,7 +7,6 @@ import useSettings from "./hooks/useSettings";
 import Timer from "./components/Timer";
 import Reveal from "./pages/Reveal";
 function DefineAppDOM(phase) {
-  console.log(phase);
   switch (phase) {
     case "setup":
       return <Home />;

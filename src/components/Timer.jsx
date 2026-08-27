@@ -2,7 +2,7 @@ import useGame from "../hooks/useGame";
 import { useState, useEffect } from "react";
 export default function Timer() {
   const { game, reveal } = useGame();
-  const [timeLimit, setTimeLimit] = useState(() => game.timeLimit * 60);
+  const [timeLimit, setTimeLimit] = useState(() => game.timeLimit);
 
   useEffect(() => {
     if (!game.timeLimit) return;

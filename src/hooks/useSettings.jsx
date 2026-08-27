@@ -2,9 +2,11 @@ import { useContext, useState } from "react";
 import { SettingsContext } from "../context/settings.context.jsx";
 import useGame from "./useGame.jsx";
 import { settingsSchema } from "../utils/zod.js";
+import i18n from "../utils/i18n.js";
 export default function useSettings() {
   const { settings, setSettings } = useContext(SettingsContext);
   const { game } = useGame();
+  // Keep edits local until the complete settings object passes validation.
   const [draft, setDraft] = useState(settings);
   const updateDraft = (key, value) => {
     if (game.phase !== "setup") return;
@@ -38,6 +40,7 @@ export default function useSettings() {
     }
     setSettings(result.data);
     setDraft(result.data);
+    i18n.changeLanguage(result.data.language);
   };
   const resetDraft = () => {
     setDraft(settings);

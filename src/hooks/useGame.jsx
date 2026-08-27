@@ -30,7 +30,7 @@ export default function useGame() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const timeLimit = formData.get("timeLimit");
-    dispatch({ type: "SET_TIME_LIMIT", payload: parseFloat(timeLimit) });
+    dispatch({ type: "SET_TIME_LIMIT", payload: parseFloat(timeLimit) * 60 });
   };
   const mutateImposterCount = (action) => {
     const actionType =
@@ -58,16 +58,15 @@ export default function useGame() {
           source: issue.path,
         };
       });
-      return console.log(errs);
+      return errs;
     }
     const { random, floor } = Math;
     const totalPlayers = game.players.length;
-    // Using a set prevents index repetion
+
+    // Build a unique set of imposter indexes before assigning roles.
     const imposterIndices = new Set();
-    // Using While to repeate to satisfy the condtion under the nature of a set
     while (imposterIndices.size < game.imposterCount) {
       imposterIndices.add(floor(random() * totalPlayers));
-      console.log(imposterIndices);
     }
     const newPlayers = game.players.map((p, i) => {
       return {
