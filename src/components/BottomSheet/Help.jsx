@@ -1,3 +1,3 @@
 export default function Help() {
-    return null
+    return <div>Hello world this is the help page</div>
 }

@@ -32,5 +32,11 @@ const setupInputSchema = z
       "Too many imposters for this player count — need at least 2 crew members",
     path: ["imposterCount"],
   });
-
-export { setupInputSchema };
+const settingsSchema = z.object({
+  language: z.enum(["en", "ar", "fr"]),
+  theme: z.enum(["light", "dark"]),
+  wordRepeat: z.boolean(),
+  music: z.boolean(),
+  sound: z.boolean(),
+});
+export { setupInputSchema, settingsSchema };

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import BottomSheet from "../components/BottomSheet/index.jsx";
 export default function useBottomSheet() {
-  console.log("useBottomSheet hook called");
   const [bottomSheet, setBottomSheet] = useState({
     element: null,
     nature: null,

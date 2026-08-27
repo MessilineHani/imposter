@@ -2,8 +2,7 @@ import BottomSheet from "../components/BottomSheet/index.jsx";
 import useBottomSheet from "../hooks/useBottomSheet.jsx";
 import useGame from "../hooks/useGame.jsx";
 export default function Home() {
-  const { startGame, game } = useGame();
-  console.log(game);
+  const { startGame } = useGame();
   const { bottomSheet, ToggleBottomSheet } = useBottomSheet();
   const bottomSheetElements = [
     "Players",
