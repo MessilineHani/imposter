@@ -111,12 +111,23 @@ export default function reducer(state, action) {
       };
     }
     case "START_GAME": {
+      const { players, word } = action.payload ?? {};
+      if (!Array.isArray(players) || players.length < 3 || players.length > 15)
+        return state;
+      if (
+        !word ||
+        typeof word !== "object" ||
+        !word.word ||
+        !word.hint ||
+        !word.category
+      )
+        return state;
       if (state.phase !== "setup" && state.phase !== "reveal") return state;
       return {
         ...state,
         phase: "passing",
-        players: action.payload.players,
-        currentWord: action.payload.word,
+        players: players,
+        currentWord: word,
         currentPlayerIndex: 0,
       };
     }
